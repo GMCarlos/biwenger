@@ -1,16 +1,17 @@
-package controller;
+package com.biwenger.backend.controller;
 
-import controller.model.PlayerResponse;
+import com.biwenger.backend.controller.model.PlayerResponse;
 import java.io.IOException;
-import lombok.RequiredArgsConstructor;
+
+import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.PlayerService;
+import com.biwenger.backend.service.PlayerService;
 
 @RestController
 @RequestMapping("/players")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PlayerController {
 
   private final PlayerService playerService;

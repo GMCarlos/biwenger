@@ -1,9 +1,10 @@
-package repository.model;
+package com.biwenger.backend.repository.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "player")
@@ -26,7 +27,7 @@ public class Player {
   @NotNull private String iconHero;
   @NotNull private int playedHome;
   @NotNull private int playedAway;
-  @NotNull private Fitness fitness;
+  @NotNull private List<String> fitness;
   @NotNull private int points;
   @NotNull private int pointsHome;
   @NotNull private int pointsAway;

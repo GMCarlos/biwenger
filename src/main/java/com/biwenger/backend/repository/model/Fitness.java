@@ -1,4 +1,4 @@
-package repository.model;
+package com.biwenger.backend.repository.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -13,5 +13,5 @@ import lombok.*;
 @Builder
 public class Fitness {
     private String status;
-    private int number;
+    private String number;
 }

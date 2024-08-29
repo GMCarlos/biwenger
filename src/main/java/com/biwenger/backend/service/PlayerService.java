@@ -1,14 +1,13 @@
-package service;
+package com.biwenger.backend.service;
 
-import controller.model.PlayerResponse;
+import com.biwenger.backend.controller.model.PlayerResponse;
+import com.biwenger.backend.repository.model.Player;
+import com.biwenger.backend.service.mapper.PlayerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import repository.PlayerRepository;
-import repository.model.Player;
-import service.mapper.PlayerMapper;
+import com.biwenger.backend.repository.PlayerRepository;
 
 import java.io.IOException;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
