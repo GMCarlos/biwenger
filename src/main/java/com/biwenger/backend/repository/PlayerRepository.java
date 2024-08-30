@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PlayerRepository {
 
+  public static final String imageUrl =
+      "https://cdn.biwenger.com/cdn-cgi/image/f=avif/i/p/replace.png";
+
   public List<Player> findAll() throws IOException, URISyntaxException {
     JSONObject json =
         new JSONObject(
@@ -33,7 +36,9 @@ public class PlayerRepository {
     while (keys.hasNext()) {
       String key = keys.next();
       Object value = players.get(key);
-      playerList.add(mapper.readValue(value.toString(), Player.class));
+      Player player = mapper.readValue(value.toString(), Player.class);
+      player.setIconHero(imageUrl.replace("replace", player.getId().toString()));
+      playerList.add(player);
       System.out.println(key + " : " + value);
     }
 

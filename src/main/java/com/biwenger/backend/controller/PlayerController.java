@@ -19,8 +19,14 @@ public class PlayerController {
   private final PlayerService playerService;
 
   @GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<PlayerResponse>> findPlayers(@RequestParam String playerName)
+  public ResponseEntity<List<PlayerResponse>> findPlayerByName(@RequestParam String playerName)
       throws IOException, URISyntaxException {
-    return ResponseEntity.ok(playerService.findApplicablePlayers(playerName));
+    return ResponseEntity.ok(playerService.findPlayerByName(playerName));
+  }
+
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<PlayerResponse>> findPlayers()
+          throws IOException, URISyntaxException {
+    return ResponseEntity.ok(playerService.findAllPlayers());
   }
 }
