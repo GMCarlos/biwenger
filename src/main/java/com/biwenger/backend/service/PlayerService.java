@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.biwenger.backend.repository.PlayerRepository;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,12 +19,12 @@ public class PlayerService {
 
   private final PlayerMapper playerMapper;
 
-  public PlayerResponse findApplicablePlayers(String playerName) throws IOException {
+  public List<PlayerResponse> findApplicablePlayers(String playerName) throws IOException, URISyntaxException {
 
-    return getPlayerResponseMapper(playerRepository.findByName(playerName).orElse(new Player()));
+    return getPlayerResponseMapper(playerRepository.findByName(playerName));
   }
 
-  private PlayerResponse getPlayerResponseMapper(Player player) {
+  private List<PlayerResponse> getPlayerResponseMapper(List<Player> player) {
     return playerMapper.toPlayerResponse(player);
   }
 }

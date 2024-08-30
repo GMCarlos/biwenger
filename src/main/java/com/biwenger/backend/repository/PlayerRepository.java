@@ -1,16 +1,12 @@
 package com.biwenger.backend.repository;
 
 import com.biwenger.backend.repository.model.Player;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Repository;
@@ -18,11 +14,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PlayerRepository {
 
-  public Optional<Player> findByName(String playerName) throws IOException {
+  public List<Player> findAll() throws IOException, URISyntaxException {
     JSONObject json =
         new JSONObject(
             IOUtils.toString(
-                new URL("https://cf.biwenger.com/api/v2/competitions/la-liga/data?lang=es&score=2"),
+                new URI("https://cf.biwenger.com/api/v2/competitions/la-liga/data?lang=es&score=2")
+                    .toURL(),
                 StandardCharsets.UTF_8));
     JSONObject data = (JSONObject) json.get("data");
     JSONObject players = (JSONObject) data.get("players");
@@ -33,14 +30,21 @@ public class PlayerRepository {
 
     List<Player> playerList = new ArrayList<>();
 
-    while(keys.hasNext()){
+    while (keys.hasNext()) {
       String key = keys.next();
       Object value = players.get(key);
       playerList.add(mapper.readValue(value.toString(), Player.class));
-      System.out.println( key +" : " + value);
+      System.out.println(key + " : " + value);
     }
 
+    return playerList;
+  }
 
-    return null;
+  public List<Player> findByName(String playerName) throws IOException, URISyntaxException {
+    List<Player> playerList = findAll();
+
+    return playerList.stream()
+        .filter(player -> player.getName().toUpperCase().contains(playerName.toUpperCase()))
+        .toList();
   }
 }
