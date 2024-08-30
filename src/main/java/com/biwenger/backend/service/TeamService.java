@@ -1,5 +1,6 @@
 package com.biwenger.backend.service;
 
+import com.biwenger.backend.controller.model.TeamListResponse;
 import com.biwenger.backend.controller.model.TeamResponse;
 import com.biwenger.backend.repository.TeamRepository;
 import com.biwenger.backend.repository.model.Team;
@@ -19,18 +20,20 @@ public class TeamService {
 
   private final TeamMapper teamMapper;
 
-  public List<TeamResponse> findTeamByName(String teamName) throws IOException, URISyntaxException {
+  public TeamListResponse findTeamByName(String teamName) throws IOException, URISyntaxException {
     // ToDo try catch para capturar las excepciones
     List<TeamResponse> teamResponseList =
         getTeamResponseMapper(teamRepository.findByName(teamName));
     teamResponseList.forEach(
         team -> team.setImageUrl(imageUrl.replace("replace", team.getId().toString())));
-    return teamResponseList;
+    return TeamListResponse.builder().teamListResponse(teamResponseList).build();
   }
 
-  public List<TeamResponse> findAllTeams() throws IOException, URISyntaxException {
+  public TeamListResponse findAllTeams() throws IOException, URISyntaxException {
     // ToDo try catch para capturar las excepciones
-    return getTeamResponseMapper(teamRepository.findAll());
+    return TeamListResponse.builder()
+        .teamListResponse(getTeamResponseMapper(teamRepository.findAll()))
+        .build();
   }
 
   private List<TeamResponse> getTeamResponseMapper(List<Team> team) {

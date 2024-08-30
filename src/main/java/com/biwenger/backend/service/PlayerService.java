@@ -1,5 +1,6 @@
 package com.biwenger.backend.service;
 
+import com.biwenger.backend.controller.model.PlayerListResponse;
 import com.biwenger.backend.controller.model.PlayerResponse;
 import com.biwenger.backend.repository.PlayerRepository;
 import com.biwenger.backend.repository.model.Player;
@@ -18,15 +19,19 @@ public class PlayerService {
 
   private final PlayerMapper playerMapper;
 
-  public List<PlayerResponse> findPlayerByName(String playerName)
+  public PlayerListResponse findPlayerByName(String playerName)
       throws IOException, URISyntaxException {
     // ToDo try catch para capturar las excepciones
-    return getPlayerResponseMapper(playerRepository.findByName(playerName));
+    return PlayerListResponse.builder()
+        .playerListResponse(getPlayerResponseMapper(playerRepository.findByName(playerName)))
+        .build();
   }
 
-  public List<PlayerResponse> findAllPlayers() throws IOException, URISyntaxException {
+  public PlayerListResponse findAllPlayers() throws IOException, URISyntaxException {
     // ToDo try catch para capturar las excepciones
-    return getPlayerResponseMapper(playerRepository.findAll());
+    return PlayerListResponse.builder()
+        .playerListResponse(getPlayerResponseMapper(playerRepository.findAll()))
+        .build();
   }
 
   private List<PlayerResponse> getPlayerResponseMapper(List<Player> player) {
