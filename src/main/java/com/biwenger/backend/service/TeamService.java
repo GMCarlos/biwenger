@@ -13,13 +13,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TeamService {
+  public static final String imageUrl =
+      "https://cdn.biwenger.com/cdn-cgi/image/f=avif/i/t/replace.png";
   private final TeamRepository teamRepository;
 
   private final TeamMapper teamMapper;
 
   public List<TeamResponse> findTeamByName(String teamName) throws IOException, URISyntaxException {
     // ToDo try catch para capturar las excepciones
-    return getTeamResponseMapper(teamRepository.findByName(teamName));
+    List<TeamResponse> teamResponseList =
+        getTeamResponseMapper(teamRepository.findByName(teamName));
+    teamResponseList.forEach(
+        team -> team.setImageUrl(imageUrl.replace("replace", team.getId().toString())));
+    return teamResponseList;
   }
 
   public List<TeamResponse> findAllTeams() throws IOException, URISyntaxException {

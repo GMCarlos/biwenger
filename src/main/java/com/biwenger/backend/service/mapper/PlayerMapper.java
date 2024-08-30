@@ -11,7 +11,7 @@ public interface PlayerMapper {
 
   @Mapping(source = "id", target = "id")
   @Mapping(source = "name", target = "name")
-  @Mapping(source = "iconHero", target = "url")
+  @Mapping(source = "iconHero", target = "imageUrl")
   PlayerResponse toPlayerResponse(Player player);
 
   List<PlayerResponse> toPlayerResponse(List<Player> playerList);
