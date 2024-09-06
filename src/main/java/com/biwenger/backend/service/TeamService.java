@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,7 @@ public class TeamService {
 
   private final TeamMapper teamMapper;
 
+  @Cacheable(value = "teamName")
   public TeamListResponse findTeamByName(String teamName) throws IOException, URISyntaxException {
     // ToDo try catch para capturar las excepciones
     List<TeamResponse> teamResponseList =
@@ -29,6 +31,7 @@ public class TeamService {
     return TeamListResponse.builder().teamListResponse(teamResponseList).build();
   }
 
+  @Cacheable(value = "allTeams")
   public TeamListResponse findAllTeams() throws IOException, URISyntaxException {
     // ToDo try catch para capturar las excepciones
     return TeamListResponse.builder()

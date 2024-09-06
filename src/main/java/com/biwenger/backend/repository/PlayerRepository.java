@@ -7,8 +7,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,6 +19,7 @@ public class PlayerRepository {
   public static final String imageUrl =
       "https://cdn.biwenger.com/cdn-cgi/image/f=avif/i/p/replace.png";
 
+  @Cacheable(value = "allPlayers")
   public List<Player> findAll() throws IOException, URISyntaxException {
     JSONObject json =
         new JSONObject(
@@ -45,11 +48,12 @@ public class PlayerRepository {
     return playerList;
   }
 
+  @Cacheable(value = "playerName")
   public List<Player> findByName(String playerName) throws IOException, URISyntaxException {
     List<Player> playerList = findAll();
 
     return playerList.stream()
         .filter(player -> player.getName().toUpperCase().contains(playerName.toUpperCase()))
-        .toList();
+        .collect(Collectors.toList());
   }
 }

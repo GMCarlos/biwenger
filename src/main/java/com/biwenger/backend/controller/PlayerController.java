@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/players")
 @AllArgsConstructor
 public class PlayerController {
-
   private final PlayerService playerService;
 
   @GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
